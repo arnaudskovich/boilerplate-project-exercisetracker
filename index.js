@@ -33,6 +33,7 @@ app.post("/api/users/:id/exercises", express.urlencoded({ extended: true }), asy
 app.get("/api/users/:id/logs", async (req, res) => {
 	const opts = {};
 	const { from, to, limit } = req.query;
+	console.log(req.query);
 	if (from) opts.from = new Date(from);
 	if (to) opts.to = new Date(to);
 	if (limit) opts.limit = Number(limit);
@@ -40,7 +41,7 @@ app.get("/api/users/:id/logs", async (req, res) => {
 	const trt = { username: u.username, _id: u.id };
 	u.log.filter((l) => {
 		const states = [];
-		if (opts.from) states.push(l.date >= opts.from);
+		if (opts.from) states.push(new Date(l.date) >= opts.from);
 		if (opts.to) states.push(opts.to >= l.date);
 		return states.indexOf(false) === -1;
 	});
@@ -48,14 +49,14 @@ app.get("/api/users/:id/logs", async (req, res) => {
 		if (from && !isNaN(Date.parse(from))) opts;
 		return { description: l.description, duration: l.duration, date: new Date(l.date).toDateString() };
 	});
-	if (opts.limit) trt.log.slice();
-	[].slice(0, opts.limit);
+	console.log("opts", opts);
+	if (typeof opts.limit === "number") trt.log = trt.log.slice(0, opts.limit);
 	trt.count = u.log.length;
 	return res.json(trt);
 });
-
+//"mongodb+srv://nadia:WEmNfKPjMmkTgDVm@cluster0.1ozz8.mongodb.net/exercices-fcc?retryWrites=true&w=majority"
 mongoose
-	.connect("mongodb+srv://nadia:WEmNfKPjMmkTgDVm@cluster0.1ozz8.mongodb.net/exercices-fcc?retryWrites=true&w=majority")
+	.connect("mongodb://localhost:27017/exercice-fcc")
 	.then(() => console.log("DB CONNECTED"))
 	.catch((err) => {
 		throw err;
