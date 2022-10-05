@@ -56,7 +56,7 @@ app.get("/api/users/:id/logs", async (req, res) => {
 });
 
 mongoose
-	.connect("mongodb+srv://nadia:WEmNfKPjMmkTgDVm@cluster0.1ozz8.mongodb.net/exercices-fcc?retryWrites=true&w=majority")
+	.connect(CHANGE_HERE)
 	.then(() => console.log("DB CONNECTED"))
 	.catch((err) => {
 		throw err;
