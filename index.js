@@ -54,9 +54,9 @@ app.get("/api/users/:id/logs", async (req, res) => {
 	trt.count = u.log.length;
 	return res.json(trt);
 });
-//"mongodb+srv://nadia:WEmNfKPjMmkTgDVm@cluster0.1ozz8.mongodb.net/exercices-fcc?retryWrites=true&w=majority"
+
 mongoose
-	.connect("mongodb://localhost:27017/exercice-fcc")
+	.connect("mongodb+srv://nadia:WEmNfKPjMmkTgDVm@cluster0.1ozz8.mongodb.net/exercices-fcc?retryWrites=true&w=majority")
 	.then(() => console.log("DB CONNECTED"))
 	.catch((err) => {
 		throw err;
